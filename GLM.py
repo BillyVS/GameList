@@ -15,31 +15,34 @@ class game:
 
 
 def getList(list_name):
-    print(lines)
     n= 0
     checked = 0
     the_list = []
-    print(list_name)
     while checked == 0:
         if lines[n].find(list_name) != -1:
             checked = 1
         else:
             n += 1
-    print(n)
-    item = lines[n+1].rstrip("\n")
-    the_list.append(item)
+    x = n + 1
+    checked = 0
+    while checked == 0:
+        if lines[x] == "\n":
+            checked =1
+        else:
+            the_list.append(lines[x].rstrip("\n"))
+            x = x+1
+        
     return the_list
 
 
 def addGame():
-    title = input("What is the title of the game>\n")
-    release_year = input("What year did the game come out?\n")
-    developers = input("Who made the game?\n")
-    notes = []
+    game_title = input("What is the title of the game>\n")
+    game_release_year = input("What year did the game come out?\n")
+    game_developer = input("Who made the game?\n")
+    game_notes = []
     today = date.today()
-    date_added = today.strftime("%d/%m/%Y")
+    game_date_added = today.strftime("%d/%m/%Y")
     complete = 0
-    
     
     while complete == 0:
         note = input("What did you like about the game?\n")
@@ -48,7 +51,14 @@ def addGame():
         else:
             notes.append(note)
 
-    game_dictionary[title] = game(title,release_year,developers,notes,date_added)
+    game_dictionary[game_title] = game(game_title,game_release_year,game_developer,game_notes,game_date_added)
+    game_list.append(game_title)
+    release_years.append(game_release_year)
+    developers.append(game_developer)
+    notes.append(game_notes)
+    dates.append(game_date_added)
+
+    filmRankedInsertion((game_dictionary[game_title]))
 
 
 def displayMenu():
@@ -84,36 +94,35 @@ def displayMenu():
 
 
 def editTextFile():
-    keys_list = list(game_dictionary)
     output_lines = []
     output_lines.append("    GAMES LIST:")
-    for key in keys_list:
-        output_lines.append(game_dictionary[key].title)
+    for game in game_list:
+        output_lines.append(game)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    RANKED LIST:")
     for game in ranked_list:
-        output_lines.append("TEST")
+        output_lines.append(game)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    RELEASE YEARS:")
-    for key in keys_list:
-        output_lines.append(game_dictionary[key].release_year)
+    for year in release_years:
+        output_lines.append(year)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    DEVELOPERS:")
-    for key in keys_list:
-        output_lines.append(game_dictionary[key].developers)
+    for developer in developers:
+        output_lines.append(developer)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    NOTES:")
-    for key in keys_list:
-        output_lines.append(game_dictionary[key].notes)
+    for note in notes:
+        output_lines.append(note)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    DATES ADDED:")
-    for key in keys_list:
-        output_lines.append(game_dictionary[key].date_added)
+    for date in dates:
+        output_lines.append(date)
     for i in range (0,2):
         output_lines.append("\n")
 
@@ -125,70 +134,82 @@ def editTextFile():
     file_to_write.close()
 
 
-def FilmRankedInsertion(game,ranked_games):
-    position_found = False
-    ranked_games = list(ranked_games)
-    games_left = len(ranked_games)
-    game_reference = "PlaceHolder"
+def filmRankedInsertion(game):
+    print(ranked_list)
+    list_length = len(ranked_list)
+    ranked_list_sub = ranked_list
+    rankings = list(range(1,list_length + 1))
+    game_reference = ""
     rating_reference = 0
     games_asked = []
+    position_found = False
     while position_found == False:
-        if games_left > 0:
-            if ranked_games[int(games_left/2)] not in games_asked:
-                       
-                if game_reference != ranked_games[int(games_left/2)]:
-                    if games_left % 2 == 0:
-                        print("Is",game,"better than: ",ranked_games[int(games_left/2)])
-                        game_reference = ranked_games[int(games_left/2)]
+        if list_length > 0:
+            if ranked_list_sub[int(list_length/2)] not in games_asked:
+                if game_reference != ranked_list_sub[int(list_length/2)]:
+                    if list_length % 2 == 0:
+                        print("Is",game.title,"better than: ",ranked_list_sub[int(list_length/2)])
+                        game_reference = ranked_list_sub[int(list_length/2)]
                     else:
-                        print("Is",game,"better than: ",ranked_games[int((games_left/2)-0.5)])
-                        game_reference = ranked_games[int(games_left/2)]
+                        print("Is",game.title,"better than: ",ranked_list_sub[int((list_length/2)-0.5)])
+                        game_reference = ranked_list_sub[int(list_length/2)]
                     print("Y or N")
-                    ValidInput = False
-                    while ValidInput == False:
-                        Choice = input()
-                        if Choice == "y" or Choice == "Y" or Choice == "n" or Choice == "N":
-                            ValidInput = True
+                    valid_input = False
+                    while valid_input == False:
+                        choice = input()
+                        if choice == "y" or choice == "Y" or choice == "n" or choice == "N":
+                            valid_input = True
                         else:
                             print("Y or N")
                     games_asked.append(game_reference)
-                    if Choice == "y" or Choice == "Y":
-                        if games_left % 2 == 0:
-                            games_left = games_left/2
-                            del ranked_games[int(games_left):int(len(ranked_games))]
+
+                    if choice == "y" or choice == "Y":
+                        if list_length % 2 == 0:
+                            list_length = list_length/2
+                            print(ranked_list)
+                            del ranked_list_sub[int(list_length):int(len(ranked_list_sub))]
+                            print(ranked_list)
                             rating_reference = 1
                         else:
-                            if len(ranked_games) == 1:
+                            if len(ranked_list_sub) == 1:
                                 rating_reference = 1
-                                games_left = 0
+                                list_length = 0
                             else:
                                 rating_reference = 1
-                                games_left = (games_left / 2) - 0.5
-                                del ranked_games[int(games_left):int(len(ranked_games))]
-                    elif Choice == "n" or Choice == "N":
-                        if games_left % 2 == 0:
-                            games_left = int(len(ranked_games)/2)
-                            del ranked_games[0:games_left]
-                            games_left = len(ranked_games)
-                            rating_reference = - 1
+                                list_length = (list_length / 2) - 0.5
+                                del ranked_list_sub[int(list_length):int(len(ranked_list_sub))]
+                    
+                    elif choice == "n" or choice == "N":
+                        if list_length % 2 == 0:
+                            list_length = int(len(ranked_list_sub)/2)
+                            del ranked_list_sub[0:list_length]
+                            list_length = len(ranked_list_sub)
+                            RatingReference = - 1
                         else:
-                            if len(ranked_games) == 1:
-                                rating_reference = - 1
-                                games_left = 0
+                            if len(ranked_list_sub) == 1:
+                                RatingReference = - 1
+                                list_length = 0
                             else:
-                                rating_reference = - 1
-                                games_left = len(ranked_games)
-                                del ranked_games[0:int((int(games_left)/2)-0.5)]
-                                games_left = len(ranked_games)
+                                RatingReference = - 1
+                                list_length = len(ranked_list_sub)
+                                del ranked_list_sub[0:int((int(list_length)/2)-0.5)]
+                                list_length = len(ranked_list_sub)
                 else:
-                    games_left = 0
+                    list_length = 0
             else:
-                games_left = 0
+                list_length = 0
         else:
             position_found = True
-    
-
-    print(rating_reference)
+    if rating_reference == 1:
+        print(ranked_list.index(game_reference))
+        print(ranked_list)
+        ranked_list.insert((ranked_list.index(game_reference)), game)
+        print(ranked_list)
+    if rating_reference == -1:
+        print(ranked_list.index(game_reference))
+        print(ranked_list)
+        ranked_list.insert((ranked_list.index(game_reference)), game)
+        print(ranked_list)        
   
 
 
@@ -196,13 +217,14 @@ def FilmRankedInsertion(game,ranked_games):
 game_dictionary = {}
 ##Collect all saved data
 game_list = getList("GAMES LIST:")
+print(game_list)
 ranked_list = getList("RANKED LIST:")
 release_years = getList("RELEASE YEARS:")
 developers = getList("DEVELOPERS:")
 notes = getList("NOTES:")
+dates = getList("DATES ADDED:")
 if len(game_list) != 0:
     for i in range(0,len(game_list)):
-        
         game_dictionary[game_list[i]] = game(game_list[i],ranked_list[i],release_years[i],developers[i],notes[i])
 displayMenu()
 editTextFile()

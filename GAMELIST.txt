@@ -1,35 +1,65 @@
     GAMES LIST:
-Portal
+game1
+game2
+game3
+game4
+Test
+.insert
 
 
 
 
     RANKED LIST:
-TEST
+game1
+game2
+game3
+game4
+Test
+.insert
 
 
 
 
     RELEASE YEARS:
-2007
+game1
+game2
+game3
+game4
+Test
+.insert
 
 
 
 
     DEVELOPERS:
-Valve
+game1
+game2
+game3
+game4
+Test
+.insert
 
 
 
 
     NOTES:
-WOW
+game1
+game2
+game3
+game4
+Test
+.insert
 
 
 
 
     DATES ADDED:
-TEST
+game1
+game2
+game3
+game4
+Test
+19/10/2021
 
 
 
