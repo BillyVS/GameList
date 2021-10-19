@@ -74,20 +74,28 @@ def addGame():
     today = date.today()
     game_date_added = today.strftime("%d/%m/%Y")
     complete = 0
-    
+    at_least_one = False
     while complete == 0:
-        note = input("What did you like about the game?\n")
+        note = input("Notes about the game:   (X to skip)\n")
         if note == "x" or note == "X":
-            complete = 1
+            if at_least_one == True:
+                complete = 1
+            else:
+                game_notes.append("none")
         else:
-            game_notes.append(note)
+            at_least_one = True
+        
+        game_notes.append(note)
     game_dictionary[game_title] = game(game_title,game_release_year,game_developer,game_notes,game_date_added)
     game_list.append(game_title)
     release_years.append(game_release_year)
     developers.append(game_developer)
     notes.append(game_notes)
     dates.append(game_date_added)
-    filmRankedInsertion((game_dictionary[game_title]))
+    if len(game_list) == 1:
+        ranked_list.append(game_title)
+    else:
+        filmRankedInsertion((game_dictionary[game_title]))
 
 
 def displayMenu():
@@ -108,10 +116,8 @@ def displayMenu():
         choice = input()
         if choice == "1":
             valid_input = True
-            print("\n")
-            printAllLists()
+            print("\n")   
             addGame()
-            printAllLists()
             displayMenu()
         elif choice == "2":
             valid_input = True
