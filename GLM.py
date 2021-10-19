@@ -14,6 +14,37 @@ class game:
         self.date_added = date_added
 
 
+def printAllLists():
+    print(game_list)
+    print(release_years)
+    print(developers)
+    print(notes)
+    print(dates)
+    print(ranked_list)
+
+def getListOfLists(list_name):
+    n= 0
+    checked = 0
+    the_list = []
+    while checked == 0:
+        if lines[n].find(list_name) != -1:
+            checked = 1
+        else:
+            n += 1
+    x = n + 1
+    checked = 0
+    while checked == 0:
+        if lines[x] == "\n":
+            checked =1
+        else:
+            line = lines[x].rstrip("\n")
+            split_list = [x.strip() for x in line.split(',')]
+            the_list.append(split_list)
+            x = x+1
+        
+    return the_list
+
+
 def getList(list_name):
     n= 0
     checked = 0
@@ -49,15 +80,13 @@ def addGame():
         if note == "x" or note == "X":
             complete = 1
         else:
-            notes.append(note)
-
+            game_notes.append(note)
     game_dictionary[game_title] = game(game_title,game_release_year,game_developer,game_notes,game_date_added)
     game_list.append(game_title)
     release_years.append(game_release_year)
     developers.append(game_developer)
     notes.append(game_notes)
     dates.append(game_date_added)
-
     filmRankedInsertion((game_dictionary[game_title]))
 
 
@@ -80,8 +109,9 @@ def displayMenu():
         if choice == "1":
             valid_input = True
             print("\n")
+            printAllLists()
             addGame()
-
+            printAllLists()
             displayMenu()
         elif choice == "2":
             valid_input = True
@@ -117,7 +147,10 @@ def editTextFile():
         output_lines.append("\n")
     output_lines.append("    NOTES:")
     for note in notes:
-        output_lines.append(note)
+        string = ""
+        for further_notes in note:
+            string = string + further_notes + ","
+        output_lines.append(string)
     for i in range (0,2):
         output_lines.append("\n")
     output_lines.append("    DATES ADDED:")
@@ -135,9 +168,9 @@ def editTextFile():
 
 
 def filmRankedInsertion(game):
-    print(ranked_list)
-    list_length = len(ranked_list)
-    ranked_list_sub = ranked_list
+    
+    ranked_list_sub = list(ranked_list)
+    list_length = len(ranked_list_sub)
     rankings = list(range(1,list_length + 1))
     game_reference = ""
     rating_reference = 0
@@ -167,8 +200,10 @@ def filmRankedInsertion(game):
                         if list_length % 2 == 0:
                             list_length = list_length/2
                             print(ranked_list)
+                            print(ranked_list_sub)
                             del ranked_list_sub[int(list_length):int(len(ranked_list_sub))]
                             print(ranked_list)
+                            print(ranked_list_sub)
                             rating_reference = 1
                         else:
                             if len(ranked_list_sub) == 1:
@@ -202,14 +237,10 @@ def filmRankedInsertion(game):
             position_found = True
     if rating_reference == 1:
         print(ranked_list.index(game_reference))
-        print(ranked_list)
-        ranked_list.insert((ranked_list.index(game_reference)), game)
+        ranked_list.insert((ranked_list.index(game_reference)), game.title)
         print(ranked_list)
     if rating_reference == -1:
-        print(ranked_list.index(game_reference))
-        print(ranked_list)
-        ranked_list.insert((ranked_list.index(game_reference)), game)
-        print(ranked_list)        
+        ranked_list.insert((ranked_list.index(game_reference)), game.title)
   
 
 
@@ -221,7 +252,7 @@ print(game_list)
 ranked_list = getList("RANKED LIST:")
 release_years = getList("RELEASE YEARS:")
 developers = getList("DEVELOPERS:")
-notes = getList("NOTES:")
+notes = getListOfLists("NOTES:")
 dates = getList("DATES ADDED:")
 if len(game_list) != 0:
     for i in range(0,len(game_list)):
