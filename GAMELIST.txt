@@ -2,8 +2,6 @@
 Portal: Still Alive
 Portal 2
 Halo: Reach
-Halo: Combat Evolved
-Halo: 2
 
 
 
@@ -11,7 +9,6 @@ Halo: 2
     RANKED LIST:
 Halo: Reach
 Portal 2
-Halo: 2
 Portal: Still Alive
 
 
@@ -21,8 +18,6 @@ Portal: Still Alive
 2008
 2011
 2010
-2001
-2004
 
 
 
@@ -31,28 +26,22 @@ Portal: Still Alive
 Valve Corporation
 Valve Corporation
 Bungie Inc
-Bungie Inc
-Bungie Inc
 
 
 
 
     NOTES:
-Uses only 2 characters,,
-None,
-Hijacking vehicles,Multiple ways of completing a level,Skulls,Great character customisation,Fighting a losing battle,All multiplayer modes,x,
-Iconic soundtrack,x,
-none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,none,x,yes,x,
+none,
+none,
+none,
 
 
 
 
     DATES ADDED:
-19/10/2021
-19/10/2021
-19/10/2021
-19/10/2021
-19/10/2021
+20/10/2021
+20/10/2021
+20/10/2021
 
 
 

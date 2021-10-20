@@ -82,10 +82,10 @@ def addGame():
                 complete = 1
             else:
                 game_notes.append("none")
+                complete = 1
         else:
             at_least_one = True
-        
-        game_notes.append(note)
+            game_notes.append(note)
     game_dictionary[game_title] = game(game_title,game_release_year,game_developer,game_notes,game_date_added)
     game_list.append(game_title)
     release_years.append(game_release_year)
@@ -174,7 +174,7 @@ def editTextFile():
 
 
 def filmRankedInsertion(game):
-    
+    print(ranked_list)
     ranked_list_sub = list(ranked_list)
     list_length = len(ranked_list_sub)
     rankings = list(range(1,list_length + 1))
@@ -242,11 +242,10 @@ def filmRankedInsertion(game):
         else:
             position_found = True
     if rating_reference == 1:
-        print(ranked_list.index(game_reference))
         ranked_list.insert((ranked_list.index(game_reference)), game.title)
-        print(ranked_list)
     if rating_reference == -1:
         ranked_list.insert((ranked_list.index(game_reference)), game.title)
+    print(ranked_list)
   
 
 
